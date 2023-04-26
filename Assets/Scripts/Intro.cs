@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 using TMPro;
 
 public class Intro : MonoBehaviour
@@ -15,6 +16,8 @@ public class Intro : MonoBehaviour
     public Slider carSlider;
     public TextMeshProUGUI sSliderVal;
     public TextMeshProUGUI cSliderVal;
+    public TextMeshProUGUI HighScores;
+    public int num_scores = 10;
 
 
     public void play()
@@ -37,6 +40,7 @@ public class Intro : MonoBehaviour
 
     public void scores()
     {
+        ShowTopScores();
         menuCanvas.SetActive(false);
         scorePanel.SetActive(true);
     }
@@ -63,4 +67,23 @@ public class Intro : MonoBehaviour
         settingsPanel.SetActive(false);
         menuCanvas.SetActive(true);
     }
+
+    public void ShowTopScores()
+    {
+        string path = "Assets/scores.txt";
+        string line;
+        string[] fields;
+        string[] playerNames  = new string [num_scores];
+        int[] playerScores = new int[num_scores];
+        int scores_read = 0;
+    
+        HighScores.text = "";
+        StreamReader reader = new StreamReader(path);
+        while (!reader.EndOfStream && scores_read < num_scores) {
+        line = reader.ReadLine();
+        fields = line.Split(',');
+        HighScores.text += fields[0] + " ; " + fields[1] + "\n";
+        scores_read += 1;
+    }
+  }
 }

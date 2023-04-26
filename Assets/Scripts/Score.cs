@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
+
+[Serializable]
 public class Score : MonoBehaviour {
 
 	public static int CurrentScore = 0;
